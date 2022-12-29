@@ -43,6 +43,20 @@ async function run() {
       res.send(user);
     });
 
+    app.get("/completedTask/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const user = await dailyTasksCollection.findOne(query);
+      res.send(user);
+    });
+
+    app.delete("/completedTask/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: ObjectId(id) };
+      const result = await dailyTasksCollection.deleteOne(filter);
+      res.send(result);
+    });
+
     app.post("/tasks", async (req, res) => {
       const task = req.body;
 
